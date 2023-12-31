@@ -141,7 +141,7 @@ export class Utils {
 		manager.bot.collectBlock.chestLocations = manager.bot.findBlocks({
 			matching: minecraft_data.blocksByName.chest.id,
 			maxDistance: 32,
-			count: 3,
+			count: 6,
 		});
 	
 		if (
