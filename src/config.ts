@@ -7,10 +7,10 @@ import { ViewerOptions } from "prismarine-viewer";
 config();
 
 const BOT_OPTIONS: BotOptions = {
-	host: "127.0.0.1",
+	host: "VII1smp.aternos.me",
 	username: "Dummy",
-	port: 54789,
-	version: "1.19",
+	port: 13073,
+	version: "1.12.2",
 };
 
 const VIEWER_OPTIONS: ViewerOptions = {
