@@ -1,58 +1,45 @@
 const GuardCommand: Bot.Command = {
-	name: "guard",
-	aliases: [],
-	args_definitions: [],
-	master_only: true,
-	execute: async ({ manager }) => {
-		if (
-			manager.getCollecting() ||
-			manager.getFalling() ||
-			manager.getFarming().farmed_at
-		)
-			return manager.bot.chat(
-				manager.i18n.get(
-					manager.language,
-					"commands",
-					"is_acting",
-				) as string,
-			);
+    name: "guard",
+    aliases: [],
+    args_definitions: [],
+    master_only: true,
+    execute: async ({ manager }) => {
+        if (manager.getCollecting() || manager.getFalling() || manager.getFarming().farmed_at) {
+            return manager.bot.chat(
+                manager.i18n.get(manager.language, "commands", "is_acting") as string
+            );
+        }
 
-		const guard_at = manager.getGuarding();
+        const guard_at = manager.getGuarding();
+        if (!guard_at) {
+            manager.setGuarding(true);
 
-		if (!guard_at) {
-			manager.setGuarding(true);
+            const items = manager.bot.inventory.items();
+            const sword = items.find((item) => item.name.includes("sword"));
+            const shield = items.find((item) => item.name.includes("shield"));
 
-			const items = manager.bot.inventory.items();
+            if (sword) await manager.bot.equip(sword, "hand");
+            if (shield) manager.bot.equip(shield, "off-hand");
 
-			const sword = items.find((item) => item.name.includes("sword"));
-			if (sword) await manager.bot.equip(sword, "hand");
+            manager.bot.chat(
+                manager.i18n.get(manager.language, "commands", "will_guard") as string
+            );
+        } else {
+            manager.setGuarding(false);
 
-			const shield = items.find((item) => item.name.includes("shield"));
-			if (shield) manager.bot.equip(shield, "off-hand");
+            const now = Date.now();
+            const parsed = manager.parseMS(now - guard_at);
 
-			manager.bot.chat(
-				manager.i18n.get(
-					manager.language,
-					"commands",
-					"will_guard",
-				) as string,
-			);
-		} else {
-			manager.setGuarding(false);
-
-			const now = Date.now();
-			const parsed = manager.parseMS(now - guard_at);
-
-			manager.bot.chat(
-				manager.i18n.get(manager.language, "commands", "wont_guard", {
-					days: parsed.days.toString(),
-					hours: parsed.hours.toString(),
-					minutes: parsed.minutes.toString(),
-					seconds: parsed.seconds.toString(),
-				}) as string,
-			);
-		}
-	},
+            manager.bot.chat(
+                manager.i18n.get(manager.language, "commands", "wont_guard", {
+                    days: parsed.days.toString(),
+                    hours: parsed.hours.toString(),
+                    minutes: parsed.minutes.toString(),
+                    seconds: parsed.seconds.toString(),
+                }) as string
+            );
+        }
+    },
 };
 
 export default GuardCommand;
