@@ -120,7 +120,7 @@ export class Utils {
 
 				manager.setCollecting(true);
 
-				manager.bot.collectBlock.collect(targets, (err) => {
+				manager.bot.collectBlock.collect(targets, (err: any) => {
 					manager.setCollecting(false);
 					if (err) {
 						reject(err);
@@ -131,23 +131,33 @@ export class Utils {
 	}
 
 	public fetchChests(manager: Core, minecraft_data: IndexedData) {
+		if (!manager.bot.collectBlock) {
+			manager.bot.chat(
+				"Error: collectBlock plugin not initialized. Make sure it's loaded before calling fetchChests."
+			);
+			return;
+		}
+	
 		manager.bot.collectBlock.chestLocations = manager.bot.findBlocks({
 			matching: minecraft_data.blocksByName.chest.id,
 			maxDistance: 32,
 			count: 999999,
 		});
-
-		if (manager.bot.collectBlock.chestLocations && manager.bot.collectBlock.chestLocations.length)
+	
+		if (
+			manager.bot.collectBlock.chestLocations &&
+			manager.bot.collectBlock.chestLocations.length
+		)
 			manager.bot.chat(
 				manager.i18n.get(manager.language, "utils", "no_chest_found", {
 					prefix: CONFIG.PREFIX,
-				}) as string,
+				}) as string
 			);
 		else
 			manager.bot.chat(
 				manager.i18n.get(manager.language, "utils", "found_chest", {
 					count: manager.bot.collectBlock.chestLocations.length.toString(),
-				}) as string,
+				}) as string
 			);
 	}
 
