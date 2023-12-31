@@ -12,7 +12,7 @@ const PhysicsTickEvent: Bot.Event = {
 			manager.bot.lookAt(entity.position.offset(0, entity.height, 0));
 
 		const mob = manager.bot.nearestEntity(
-			(e) =>
+			(e: { type: string; position: { distanceTo: (arg0: any) => number; }; mobType: string; }) =>
 				e.type === "mob" &&
 				e.position.distanceTo(manager.bot.entity.position) < 16 &&
 				e.mobType !== "Armor Stand",
