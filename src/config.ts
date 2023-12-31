@@ -8,7 +8,7 @@ config();
 
 const BOT_OPTIONS: BotOptions = {
 	host: "VII1smp.aternos.me",
-	username: "Dummy",
+	username: "Myfriend",
 	port: 13073,
 	version: "1.12.2",
 };
