@@ -1,3 +1,6 @@
+## Me and MasterObey want to thank barbarbar338 for making this project. Its really cool to have a robot ai thing robot to flex with your friends(if you have them)!
+## I think most of the credits here goes to him. Big heart for you, keep it up!
+
 # 🤖 A Minecraft bot that helps you about everything
 
 Currently WIP
