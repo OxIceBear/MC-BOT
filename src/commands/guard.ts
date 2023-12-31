@@ -4,34 +4,32 @@ const GuardCommand: Bot.Command = {
     args_definitions: [],
     master_only: true,
     execute: async ({ manager }) => {
-        if (manager.getCollecting() || manager.getFalling() || manager.getFarming().farmed_at) {
-            return manager.bot.chat(
-                manager.i18n.get(manager.language, "commands", "is_acting") as string
-            );
+        const { getCollecting, getFalling, getFarming, setGuarding, parseMS, bot, i18n, language } = manager;
+
+        if (getCollecting() || getFalling() || getFarming().farmed_at) {
+            return bot.chat(i18n.get(language, "commands", "is_acting") as string);
         }
 
         const guard_at = manager.getGuarding();
         if (!guard_at) {
-            manager.setGuarding(true);
+            setGuarding(true);
 
-            const items = manager.bot.inventory.items();
+            const items = bot.inventory.items();
             const sword = items.find((item) => item.name.includes("sword"));
             const shield = items.find((item) => item.name.includes("shield"));
 
-            if (sword) await manager.bot.equip(sword, "hand");
-            if (shield) manager.bot.equip(shield, "off-hand");
+            if (sword) await bot.equip(sword, "hand");
+            if (shield) bot.equip(shield, "off-hand");
 
-            manager.bot.chat(
-                manager.i18n.get(manager.language, "commands", "will_guard") as string
-            );
+            bot.chat(i18n.get(language, "commands", "will_guard") as string);
         } else {
-            manager.setGuarding(false);
+            setGuarding(false);
 
             const now = Date.now();
-            const parsed = manager.parseMS(now - guard_at);
+            const parsed = parseMS(now - guard_at);
 
-            manager.bot.chat(
-                manager.i18n.get(manager.language, "commands", "wont_guard", {
+            bot.chat(
+                i18n.get(language, "commands", "wont_guard", {
                     days: parsed.days.toString(),
                     hours: parsed.hours.toString(),
                     minutes: parsed.minutes.toString(),
