@@ -59,13 +59,13 @@ export function create_root_state(manager: Core) {
 			parent: getClosestPlayer,
 			child: lookAtPlayersState,
 			shouldTransition: () =>
-				manager.isMoving() || followPlayer.distanceToTarget() < 5,
+				manager.isMoving() || followPlayer.distanceToTarget() < 10,
 		}),
 		new StateTransition({
 			parent: lookAtPlayersState,
 			child: followMasterState,
 			shouldTransition: () =>
-				manager.isMoving() || followPlayer.distanceToTarget() >= 5,
+				manager.isMoving() || followPlayer.distanceToTarget() >= 1,
 		}),
 		new StateTransition({
 			parent: followMasterState,
