@@ -9,23 +9,19 @@ const SpawnEvent: Bot.Event = {
     name: "spawn",
     once: true,
     execute: async (manager) => {
-        try {
-            manager.reset();
-            manager.minecraft_data = minecraftData(manager.bot.version);
+        manager.reset();
+        manager.minecraft_data = minecraftData(manager.bot.version);
 
-            await Promise.all([
-                viewer(manager.bot, CONFIG.VIEWER_OPTIONS),
-                inventory(manager.bot, CONFIG.INVENTORY_VIEWER_OPTION),
-            ]);
+        await Promise.all([
+            viewer(manager.bot, CONFIG.VIEWER_OPTIONS),
+            inventory(manager.bot, CONFIG.INVENTORY_VIEWER_OPTION),
+        ]);
 
-            create_root_state(manager);
-            manager.fetchChests(manager, manager.minecraft_data);
-            farming(manager);
+        create_root_state(manager);
+        manager.fetchChests(manager, manager.minecraft_data);
+        farming(manager);
 
-            manager.logger.success("Bot successfully spawned");
-        } catch (error) {
-            manager.logger.error("Error during spawn:", error);
-        }
+        manager.logger.success("Bot successfully spawned");
     },
 };
 
