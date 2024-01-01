@@ -131,9 +131,9 @@ export class Utils {
 	}
 
 	public fetchChests(manager: Core, minecraft_data: IndexedData) {
-		if (!manager.bot.collectBlock) {
+		if (!manager.bot || !manager.bot.collectBlock) {
 			manager.bot.chat(
-				"Error: collectBlock plugin not initialized. Make sure it's loaded before calling fetchChests."
+				"Error: Bot or collectBlock plugin not initialized. Make sure they are loaded before calling fetchChests."
 			);
 			return;
 		}
@@ -160,7 +160,6 @@ export class Utils {
 				}) as string
 			);
 	}
-
 	public resetStates() {
 		this.setCollecting(false);
 		this.setFalling(false);
