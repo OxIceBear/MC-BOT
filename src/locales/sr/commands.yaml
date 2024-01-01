@@ -1,0 +1,25 @@
+pong: Pong!
+slave_of: Trenutno sam sluga od %{master}. (%{days}d %{hours}h %{minutes}m %{seconds}s)
+obey_success: Od sada, radiću sve što kažeš.
+bot_free: Trenutno sam slobodan.
+become_free: Slobodan sam od sada. (%{days}d %{hours}h %{minutes}m %{seconds}s)
+will_follow: Pratiću te.
+wont_follow: Neću te pratiti. (%{days}d %{hours}h %{minutes}m %{seconds}s)
+already_following: Već te pratim.
+dont_see: Ne vidim te.
+coming: Dolazim k tebi.
+here_it_is: Evo me.
+enter_block_name: Morate uneti puno ime bloka koji želite da sakupim.
+invalid_block: Ne mogu pronaći blok koji ste naveli. Unesite puno Minecraft ime bloka.
+blocks_collected: Blok(ovi) uspešno sakupljen(i).
+is_acting: Trenutno nešto radim. Pozovi me kasnije.
+wont_farm: Neću više da radim na farmi. (%{days}d %{hours}h %{minutes}m %{seconds}s)
+will_farm: Radiću na farmi sa %{crop} (%{seed}).
+specify_crop: Navedi ime useva.
+specify_valid_crop: Ne mogu pronaći usev koji ste naveli. Unesite puno Minecraft ime useva.
+specify_seed: Navedi ime semena.
+specify_valid_seed: Ne mogu pronaći seme koje ste naveli. Unesite puno Minecraft ime semena.
+no_chests_found: Ne vidim nikakve sanduke u blizini. Postavite neke sanduke i ponovo koristite komandu "%{prefix}farm".
+wont_guard: Neću te više čuvati. (%{days}d %{hours}h %{minutes}m %{seconds}s)
+will_guard: Čuvaću te.
+reset: Prestao sam raditi sve što si mi rekao i čekam drugu komandu.

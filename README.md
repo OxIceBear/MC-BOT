@@ -15,6 +15,6 @@ Currently WIP
 -   Auto eat ✅ (works)
 -   Armor management ✅ (will bug out sometimes)
 -   Clutch (reduce fall damage) ✅ (works)
--   Multi language ✅ (unfinished)
+-   Multi language ✅ (unfinished, currently english and serbian)
 
 We will work on this guy, hes cool! (oxicebear, MasterObey)

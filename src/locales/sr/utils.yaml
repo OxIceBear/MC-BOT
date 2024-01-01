@@ -1,0 +1,5 @@
+no_blocks_nearby: Ne vidim taj blok u blizini.
+found_blocks: Pronašao sam %{count} blok(ova), počinjem da ih sakupljam.
+no_chest_found: Ne vidim nikakve sanduke u blizini. Možda ćeš morati da mi pomogneš kada mi inventar bude pun. (ili postavi neke sanduke i koristi komandu "%{prefix}chest".)
+found_chest: Vidim %{count} sanduk(a) u blizini. Koristiću ih kada mi inventar bude pun.
+chest_full: Sanduk za sakupljanje je pun. Isprazni ga i ponovo koristi komandu "%{prefix}farm".

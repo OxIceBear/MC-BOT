@@ -7,7 +7,7 @@ import { ViewerOptions } from "prismarine-viewer";
 config();
 
 const BOT_OPTIONS: BotOptions = {
-	host: "tripletail.aternos.host",
+	host: "VII1smp.aternos.me",
 	username: "Myfriend",
 	port: 13073,
 	version: "1.12.2",
@@ -31,6 +31,6 @@ export const CONFIG = {
 	STATE_MACHINE_PORT: 3002,
 	LOCALE_PARSER_OPTIONS: {
 		directory: join(__dirname, "locales"),
-		defaultLocale: "en",
+		defaultLocale: "sr",
 	},
 };

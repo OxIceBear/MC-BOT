@@ -1,0 +1,2 @@
+master_only: Ova komanda je dostupna samo gospodaru. Prvo pokreni komandu "%{prefix}obey".
+execution_error: Došlo je do greške prilikom izvršavanja komande i obavešteni su programeri. Pokušajte ponovo kasnije.
