@@ -23,3 +23,9 @@ We will work on this guy, hes cool! (oxicebear, MasterObey)
 
 Here is a video explaining you how to do that:
 https://streamable.com/zoqsd2
+
+# Why are there only 2 languages supported?
+
+We will add more soon... currently it supports Serbian, and English (sr, en).
+
+If you want, you can help us translate to languages, so that i dont do it (please).
