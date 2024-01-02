@@ -18,3 +18,8 @@ Currently WIP
 -   Multi language ✅ (unfinished, currently english and serbian)
 
 We will work on this guy, hes cool! (oxicebear, MasterObey)
+
+# How do i change the language?
+
+Here is a video explaining you how to do that:
+https://streamable.com/zoqsd2
