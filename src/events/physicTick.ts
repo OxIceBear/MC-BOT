@@ -14,7 +14,7 @@ const PhysicsTickEvent: Bot.Event = {
 		const mob = manager.bot.nearestEntity(
 			(e) =>
 				e.type === "mob" &&
-				e.position.distanceTo(manager.bot.entity.position) < 8 &&
+				e.position.distanceTo(manager.bot.entity.position) < 6 &&
 				e.displayName !== "Armor Stand",
 		);
 		if (mob) manager.bot.pvp.attack(mob);
