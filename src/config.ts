@@ -10,7 +10,7 @@ const BOT_OPTIONS: BotOptions = {
 	host: "InfinityComm.aternos.me",
 	username: "Myfriend",
 	port: 13073,
-	version: "1.12.2",
+	version: "1.19.4",
 };
 
 const VIEWER_OPTIONS: ViewerOptions = {
