@@ -7,9 +7,9 @@ import { ViewerOptions } from "prismarine-viewer";
 config();
 
 const BOT_OPTIONS: BotOptions = {
-	host: "InfinityComm.aternos.me",
+	host: "147.185.221.20",
 	username: "Myfriend",
-	port: 13073,
+	port: 3271,
 	version: "1.12.2",
 };
 
