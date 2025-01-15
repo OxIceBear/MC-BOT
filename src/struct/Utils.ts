@@ -145,8 +145,8 @@ export class Utils {
 		});
 	
 		if (
-			manager.bot.collectBlock.chestLocations &&
-			manager.bot.collectBlock.chestLocations.length
+			!manager.bot.collectBlock.chestLocations ||
+			!manager.bot.collectBlock.chestLocations.length
 		)
 			manager.bot.chat(
 				manager.i18n.get(manager.language, "utils", "no_chest_found", {

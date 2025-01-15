@@ -35,40 +35,90 @@ async function depositLoop(manager: Core) {
 			}) as string,
 		);
 
-	if (manager.bot.entity.position.distanceTo(farming_chest) < 2) {
-		// didn't used pathfinder because bot destroys crops
-		manager.bot.setControlState("forward", false);
+	const distance = manager.bot.entity.position.distanceTo(farming_chest);
+	if (distance >= 2) {
+		const crops = manager.bot.findBlocks({
+			matching: (block) => block.name === farming,
+			maxDistance: 16,
+			count: 64
+		});
+		
+		if (crops.length > 0) {
+			const safePath = crops.reduce((acc, crop) => {
+				const cropDist = farming_chest.distanceTo(new Vec3(crop.x, crop.y, crop.z));
+				if (cropDist > 1) acc.push(new Vec3(crop.x, crop.y, crop.z));
+				return acc;
+			}, [] as Vec3[]);
 
-		const window = await manager.bot.openChest(chest);
-
-		for (const slot of manager.bot.inventory.items()) {
-			try {
-				if (slot.name == farming) await deposit(window, slot);
-			} catch (err) {
-				manager.logger.error(err);
-
-				manager.bot.chat(
-					manager.i18n.get(manager.language, "utils", "chest_full", {
-						prefix: CONFIG.PREFIX,
-					}) as string,
-				);
-
-				manager.setFarming();
-				break;
+			if (safePath.length > 0) {
+				const closest = safePath.reduce((prev, curr) => {
+					const prevDist = manager.bot.entity.position.distanceTo(prev);
+					const currDist = manager.bot.entity.position.distanceTo(curr);
+					return prevDist < currDist ? prev : curr;
+				});
+				
+				try {
+					await manager.goTo(closest);
+				} catch (err) {
+					manager.logger.error("Failed to navigate to safe point:", err);
+				}
 			}
 		}
 
-		await window.close();
-	} else {
-		// didn't used pathfinder because bot destroys crops
 		manager.bot.lookAt(farming_chest);
 		manager.bot.setControlState("forward", true);
+		manager.bot.setControlState("sprint", false);
+	} else {
+		manager.bot.setControlState("forward", false);
+		manager.bot.setControlState("sprint", false);
+
+		try {
+			const window = await manager.bot.openChest(chest);
+			let depositError = false;
+
+			for (const slot of manager.bot.inventory.items()) {
+				try {
+					if (slot.name == farming) {
+						await deposit(window, slot);
+					}
+				} catch (err) {
+					depositError = true;
+					manager.logger.error("Failed to deposit item:", err);
+					
+					manager.bot.chat(
+						manager.i18n.get(manager.language, "utils", "chest_full", {
+							prefix: CONFIG.PREFIX,
+						}) as string,
+					);
+
+					break;
+				}
+			}
+
+			await window.close();
+			
+			if (depositError) {
+				manager.setFarming();
+			}
+		} catch (err) {
+			manager.logger.error("Failed to interact with chest:", err);
+			manager.bot.chat(
+				manager.i18n.get(manager.language, "commands", "chest_error", {
+					prefix: CONFIG.PREFIX,
+				}) as string,
+			);
+		}
 	}
 }
 
 async function deposit(window: Chest, slot: Item): Promise<void> {
 	return new Promise((resolve, reject) => {
-		window.deposit(slot.type, null, slot.count).then(resolve).catch(reject);
+		window.deposit(slot.type, null, slot.count)
+			.then(resolve)
+			.catch((err) => {
+				console.error("Deposit error:", err);
+				reject(err);
+			});
 	});
 }
 
