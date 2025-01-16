@@ -23,3 +23,18 @@ no_chests_found: I don't see any chests nearby. Place some chests and use "%{pre
 wont_guard: I won't guard you anymore. (%{days}d %{hours}h %{minutes}m %{seconds}s)
 will_guard: I will guard you.
 reset: I stopped doing everything you told me before and am waiting for another command.
+manhunt.target_not_found: "Target player %{target} not found or not in range!"
+manhunt.target_added: "Added %{target} to hunt list! Total targets: %{count}"
+manhunt.not_hunting: "Not currently hunting anyone!"
+manhunt.target_removed: "Removed %{target} from hunt list! Remaining targets: %{count}"
+manhunt.not_hunting_target: "Not hunting %{target}!"
+manhunt.stopped_all: "Stopped hunting all targets!"
+manhunt.no_valid_targets: "No valid targets found!"
+manhunt.lost_sight: "Lost sight of %{target}!"
+manhunt.target_too_far: "Target %{target} too far away!"
+manhunt.error_hunting: "Error hunting %{target}: %{error}"
+manhunt.specify_action: "Please specify 'start', 'stop', or 'list'!"
+manhunt.specify_player: "Please specify a player to hunt!"
+manhunt.current_targets: "Current targets (%{count}): %{targets}"
+manhunt.current_focus: "Currently focusing on: %{target}"
+manhunt.invalid_action: "Invalid action! Use 'start', 'stop', or 'list'"

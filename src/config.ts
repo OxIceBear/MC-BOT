@@ -31,6 +31,6 @@ export const CONFIG = {
 	STATE_MACHINE_PORT: 3002,
 	LOCALE_PARSER_OPTIONS: {
 		directory: join(__dirname, "locales"),
-		defaultLocale: "sr",
+		defaultLocale: "en",
 	},
 };

@@ -23,3 +23,18 @@ no_chests_found: Ne vidim nikakve sanduke u blizini. Postavite neke sanduke i po
 wont_guard: Neću te više čuvati. (%{days}d %{hours}h %{minutes}m %{seconds}s)
 will_guard: Čuvaću te.
 reset: Prestao sam raditi sve što si mi rekao i čekam drugu komandu.
+manhunt.target_not_found: "Igrač %{target} nije pronađen ili nije u dometu!"
+manhunt.target_added: "Dodat %{target} u listu za lov! Ukupno meta: %{count}"
+manhunt.not_hunting: "Trenutno ne lovim nikoga!"
+manhunt.target_removed: "Uklonjen %{target} iz liste za lov! Preostalo meta: %{count}"
+manhunt.not_hunting_target: "Ne lovim %{target}!"
+manhunt.stopped_all: "Prestao sam da lovim sve mete!"
+manhunt.no_valid_targets: "Nema validnih meta!"
+manhunt.lost_sight: "Izgubio sam iz vida %{target}!"
+manhunt.target_too_far: "Meta %{target} je predaleko!"
+manhunt.error_hunting: "Greška u lovu na %{target}: %{error}"
+manhunt.specify_action: "Molim navedite 'start', 'stop', ili 'list'!"
+manhunt.specify_player: "Molim navedite igrača za lov!"
+manhunt.current_targets: "Trenutne mete (%{count}): %{targets}"
+manhunt.current_focus: "Trenutno fokusiran na: %{target}"
+manhunt.invalid_action: "Nevažeća akcija! Koristite 'start', 'stop', ili 'list'"
