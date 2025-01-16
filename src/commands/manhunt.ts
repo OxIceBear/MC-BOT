@@ -3,7 +3,7 @@ import { Vec3 } from "vec3";
 import { goals, Movements } from "mineflayer-pathfinder";
 import { Result } from "bargs";
 
-const ATTACK_RANGE = 3;
+const ATTACK_RANGE = 3.8;
 const SPRINT_RANGE = 6;
 const PATHFIND_RANGE = 100;
 const UPDATE_INTERVAL = 250;
@@ -102,9 +102,11 @@ async function stopHunting(manager: Core, targetName?: string) {
 }
 
 async function stopHuntingCompletely(manager: Core) {
+  // Stop all movement states
   manager.bot.clearControlStates();
   manager.bot.setControlState("forward", false);
   manager.bot.setControlState("sprint", false);
+  manager.bot.setControlState("jump", false);
   manager.bot.pathfinder.setGoal(null);
 
   state.pvpEnabled = false;
@@ -158,12 +160,18 @@ async function updateHunt(manager: Core) {
         manager.bot.attack(targetPlayer.entity);
       }
     } else if (distance <= SPRINT_RANGE) {
+      // Enable sprinting and jumping for faster movement
       manager.bot.setControlState("sprint", true);
-      await manager.bot.lookAt(targetPlayer.entity.position.offset(0, 1.6, 0));
       manager.bot.setControlState("forward", true);
+      manager.bot.setControlState("jump", true);
+      await manager.bot.lookAt(targetPlayer.entity.position.offset(0, 1.6, 0));
     } else if (distance <= PATHFIND_RANGE) {
+      // Disable manual controls when using pathfinder
+      manager.bot.clearControlStates();
       const mcData = require('minecraft-data')(manager.bot.version);
       const movements = new Movements(manager.bot);
+      movements.canDig = false;  // Don't dig blocks while chasing
+      movements.allowSprinting = true;  // Allow sprinting in pathfinding
       manager.bot.pathfinder.setMovements(movements);
       
       const goal = new goals.GoalNear(
