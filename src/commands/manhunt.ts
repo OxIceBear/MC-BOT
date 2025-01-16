@@ -16,6 +16,12 @@ const SWORD_PRIORITIES = [
   "wooden_sword"
 ];
 
+const HOSTILE_MOBS = [
+  'zombie', 'skeleton', 'spider', 'cave_spider', 'creeper', 
+  'enderman', 'witch', 'slime', 'magma_cube', 'blaze',
+  'ghast', 'hoglin', 'piglin', 'drowned', 'pillager'
+];
+
 interface Target {
   name: string;
   lastKnownPos: Vec3 | null;
@@ -126,8 +132,25 @@ async function stopHuntingCompletely(manager: Core) {
   manager.bot.chat(manager.i18n.get(manager.language, "commands", "manhunt.stopped_all") as string);
 }
 
+async function attackNearbyMobs(manager: Core) {
+  if (!state.pvpEnabled) return;
+
+  const nearestMob = manager.bot.nearestEntity(entity => {
+    if (!entity) return false;
+    return HOSTILE_MOBS.includes(entity.name?.toLowerCase() || '');
+  });
+
+  if (nearestMob && manager.bot.entity.position.distanceTo(nearestMob.position) <= ATTACK_RANGE) {
+    await manager.bot.lookAt(nearestMob.position.offset(0, nearestMob.height * 0.9, 0));
+    manager.bot.attack(nearestMob);
+  }
+}
+
 async function updateHunt(manager: Core) {
   if (!state.isHunting || !state.pvpEnabled || state.targets.size === 0) return;
+
+  // Check for and attack nearby hostile mobs first
+  await attackNearbyMobs(manager);
 
   const closestTarget = findBestTarget(manager);
   if (!closestTarget) {
