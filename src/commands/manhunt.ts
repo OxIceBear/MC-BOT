@@ -3,7 +3,7 @@ import { Vec3 } from "vec3";
 import { goals, Movements } from "mineflayer-pathfinder";
 import { Result } from "bargs";
 
-const ATTACK_RANGE = 3.8;
+const ATTACK_RANGE = 2;
 const SPRINT_RANGE = 6;
 const PATHFIND_RANGE = 100;
 const UPDATE_INTERVAL = 250;
@@ -65,6 +65,38 @@ async function equipBestSword(manager: Core): Promise<boolean> {
 }
 
 async function startHunting(manager: Core, targetName: string) {
+  if (targetName.toLowerCase() === 'all') {
+    // Add all players as targets
+    let playerCount = 0;
+    for (const playerName in manager.bot.players) {
+      // Skip the bot itself
+      if (playerName === manager.bot.username) continue;
+      
+      const player = manager.bot.players[playerName];
+      if (player?.entity) {
+        state.targets.set(playerName, {
+          name: playerName,
+          lastKnownPos: player.entity.position.clone()
+        });
+        playerCount++;
+      }
+    }
+
+    if (playerCount === 0) {
+      manager.bot.chat(manager.i18n.get(manager.language, "commands", "manhunt.no_players_found") as string);
+      return;
+    }
+
+    if (!state.isHunting) {
+      state.isHunting = true;
+      state.pvpEnabled = true;
+      state.updateInterval = setInterval(() => updateHunt(manager), UPDATE_INTERVAL);
+    }
+
+    manager.bot.chat(manager.i18n.get(manager.language, "commands", "manhunt.hunting_all", { count: playerCount.toString() }) as string);
+    return;
+  }
+
   const targetPlayer = manager.bot.players[targetName];
   if (!targetPlayer?.entity) {
     manager.bot.chat(manager.i18n.get(manager.language, "commands", "manhunt.target_not_found", { target: targetName }) as string);
