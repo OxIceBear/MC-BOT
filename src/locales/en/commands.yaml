@@ -23,6 +23,10 @@ no_chests_found: I don't see any chests nearby. Place some chests and use "%{pre
 wont_guard: I won't guard you anymore. (%{days}d %{hours}h %{minutes}m %{seconds}s)
 will_guard: I will guard you.
 reset: I stopped doing everything you told me before and am waiting for another command.
+mine.no_tool: "I don't have the right tool for this job, but I'll try my best!"
+mine.inventory_full: "My inventory is almost full! I need to stop mining."
+mine.progress: "Progress: %{mined}/%{total} %{block} mined"
+mine.unreachable: "I couldn't mine any blocks. They might be too far or unreachable."
 manhunt.target_not_found: "Target player %{target} not found or not in range!"
 manhunt.target_added: "Added %{target} to hunt list! Total targets: %{count}"
 manhunt.not_hunting: "Not currently hunting anyone!"

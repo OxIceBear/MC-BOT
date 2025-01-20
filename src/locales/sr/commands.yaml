@@ -23,6 +23,10 @@ no_chests_found: Ne vidim nikakve sanduke u blizini. Postavite neke sanduke i po
 wont_guard: Neću te više čuvati. (%{days}d %{hours}h %{minutes}m %{seconds}s)
 will_guard: Čuvaću te.
 reset: Prestao sam raditi sve što si mi rekao i čekam drugu komandu.
+mine.no_tool: "Nemam pravi alat za ovaj posao, ali daću sve od sebe!"
+mine.inventory_full: "Moj inventar je skoro pun! Moram da prestanem sa kopanjem."
+mine.progress: "Napredak: %{mined}/%{total} %{block} iskopano"
+mine.unreachable: "Nisam mogao iskopati nijedan blok. Možda su predaleko ili nedostupni."
 manhunt.target_not_found: "Igrač %{target} nije pronađen ili nije u dometu!"
 manhunt.target_added: "Dodat %{target} u listu za lov! Ukupno meta: %{count}"
 manhunt.not_hunting: "Trenutno ne lovim nikoga!"
