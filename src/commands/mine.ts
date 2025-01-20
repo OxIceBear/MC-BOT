@@ -20,7 +20,6 @@ const MIN_DISTANCE = 2;
 
 type ToolType = "wood" | "dirt" | "stone" | "default";
 
-// Tool preferences for different block types
 const TOOL_PREFERENCES: Record<ToolType, string[]> = {
     wood: ["diamond_axe", "iron_axe", "stone_axe", "wooden_axe"],
     dirt: ["diamond_shovel", "iron_shovel", "stone_shovel", "wooden_shovel"],
@@ -28,11 +27,9 @@ const TOOL_PREFERENCES: Record<ToolType, string[]> = {
     default: ["diamond_pickaxe", "iron_pickaxe", "stone_pickaxe", "wooden_pickaxe"]
 };
 
-// Block names for Minecraft 1.12.2
-const WOOD_BLOCKS = ["log", "log2"]; // In 1.12.2 logs use metadata for different types
+const WOOD_BLOCKS = ["log", "log2"];
 const DIRT_BLOCKS = ["dirt", "grass", "sand", "gravel", "clay"];
 
-// Block type mappings for 1.12.2
 const BLOCK_MAPPINGS: Record<string, string[]> = {
     "oak_log": ["log"],
     "spruce_log": ["log"],
@@ -58,10 +55,9 @@ async function findSafeBlockToMine(bot: Bot, blockIds: number[], range: number):
     const blocks = bot.findBlocks({
         matching: blockIds,
         maxDistance: range,
-        count: 10 // Find multiple blocks to filter through
+        count: 10
     });
 
-    // Filter blocks that are safe to mine
     for (const pos of blocks) {
         const block = bot.blockAt(pos);
         if (!block) {
@@ -82,7 +78,6 @@ async function findSafeBlockToMine(bot: Bot, blockIds: number[], range: number):
 async function equipBestTool(bot: Bot, block: Block): Promise<boolean> {
     const inventory = bot.inventory.items() as ExtendedItem[];
     
-    // Try to find the best tool for the block
     for (const item of inventory) {
         try {
             if (item.digSpeed && item.digSpeed(block) > 1) {
@@ -127,8 +122,7 @@ const MineCommand: Bot.Command = {
                 ) as string,
             );
 
-        // Parse arguments from the raw message
-        const parts = message.split(' ').slice(1); // Remove the command name
+        const parts = message.split(' ').slice(1);
         const blockName = parts[0] || '';
         const targetCount = parseInt(parts[1]) || 1;
 
@@ -144,13 +138,11 @@ const MineCommand: Bot.Command = {
                 ) as string,
             );
 
-        // Get all possible block types to search for
         const blockTypes = BLOCK_MAPPINGS[blockName] || [blockName];
         manager.logger.info(`[DEBUG] Block types to search for: ${blockTypes.join(", ")}`);
 
         const blockIds: number[] = [];
 
-        // Get block IDs for all possible block types
         for (const blockType of blockTypes) {
             const blockData = manager.minecraft_data?.blocksByName[blockType];
             if (blockData) {
@@ -215,7 +207,6 @@ const MineCommand: Bot.Command = {
         );
 
         while (blocksFound < targetCount && currentBlock) {
-            // Check if block is still within range of master
             const distanceToMaster = masterEntity.position.distanceTo(currentBlock.position);
             manager.logger.info(`[DEBUG] Distance to master: ${distanceToMaster}`);
 
@@ -224,7 +215,6 @@ const MineCommand: Bot.Command = {
                 break;
             }
 
-            // Check inventory space
             const emptySlots = manager.bot.inventory.slots.filter(slot => slot === null).length;
             manager.logger.info(`[DEBUG] Empty inventory slots: ${emptySlots}`);
 
@@ -240,7 +230,6 @@ const MineCommand: Bot.Command = {
             }
 
             try {
-                // Equip best tool for the block
                 const equipped = await equipBestTool(manager.bot, currentBlock);
                 if (!equipped) {
                     manager.bot.chat(
@@ -252,7 +241,6 @@ const MineCommand: Bot.Command = {
                     );
                 }
 
-                // Navigate to block
                 const movements = new Movements(manager.bot);
                 movements.canDig = true;
                 movements.dontMineUnderFallingBlock = true;
@@ -270,13 +258,11 @@ const MineCommand: Bot.Command = {
                     throw error;
                 }
 
-                // Mine the block
                 manager.logger.info(`[DEBUG] Starting to dig block`);
                 await manager.bot.dig(currentBlock);
                 manager.logger.info(`[DEBUG] Successfully mined block`);
                 blocksFound++;
                 
-                // Show progress
                 if (blocksFound % 5 === 0 || blocksFound === targetCount) {
                     manager.bot.chat(
                         manager.i18n.get(
@@ -292,7 +278,6 @@ const MineCommand: Bot.Command = {
                     );
                 }
 
-                // Find next nearest block
                 manager.logger.info(`[DEBUG] Looking for next block`);
                 currentBlock = await findSafeBlockToMine(manager.bot, blockIds, MASTER_RANGE_LIMIT);
 
